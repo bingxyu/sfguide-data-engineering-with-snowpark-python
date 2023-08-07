@@ -24,9 +24,9 @@ def get_snowpark_session() -> Session:
     # TODO: Look for a creds.json style file. This should be the way all snowpark
     # related tools work IMO
     # if using snowsql config, like snowcli does
-    elif os.path.exists(os.path.expanduser('~/.snowsql/config')):
-        snowpark_config = get_snowsql_config()
-        SnowflakeConnection().connection = Session.builder.configs(snowpark_config).create()
+#    elif os.path.exists(os.path.expanduser('~/.snowsql/config')):
+#        snowpark_config = get_snowsql_config()
+#        SnowflakeConnection().connection = Session.builder.configs(snowpark_config).create()
     # otherwise configure from environment variables
     elif "SNOWSQL_ACCOUNT" in os.environ:
         snowpark_config = {
@@ -37,6 +37,16 @@ def get_snowpark_session() -> Session:
             "warehouse": os.environ["SNOWSQL_WAREHOUSE"],
             "database": os.environ["SNOWSQL_DATABASE"],
             "schema": os.environ["SNOWSQL_SCHEMA"]
+        }
+    else:
+        snowpark_config = {
+            "account": "bqzbtdj-lrb31122", 
+            "user": "bxy12", 
+            "password": "Yu$b1ngb1ng", 
+            "role": "HOL_ROLE", 
+            "warehouse": "HOL_WH", 
+            "database": "HOL_DB", 
+            "schema": "RAW_POS" 
         }
         SnowflakeConnection().connection = Session.builder.configs(snowpark_config).create()
 
